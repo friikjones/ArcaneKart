@@ -6,7 +6,7 @@ public class S_PlayerBehaviour : MonoBehaviour
 
     [Header("Movement Speed")]
     [SerializeField] private float movementSpeed = 5f; // Speed at which the player moves
-    [SerializeField] private float maxSpeed = 10f; // Maximum speed the player can reach
+    [SerializeField] public float maxSpeed = 10f; // Maximum speed the player can reach
     [SerializeField] private float dashSpeed = 10f; // Speed at which the player dashes
     [SerializeField] private float dashDuration = 0.2f; // Duration of the dash in seconds
 
