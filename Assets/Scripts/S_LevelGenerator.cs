@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor.Animations;
 using UnityEngine;
 
 public class S_LevelGenerator : MonoBehaviour
@@ -7,13 +10,8 @@ public class S_LevelGenerator : MonoBehaviour
 
     public static S_LevelGenerator Instance { get; private set; } // Singleton instance
 
-
-    //Generation variables
-    public int matrixSizeX; // Size of the level in the X direction
-    public int matrixSizeY; // Size of the level in the Y direction
-    public GameObject[][] levelMatrix; // Matrix to represent the level layout
-    private string[][] levelMatrixNames; // Matrix to store the names of the level pieces for debugging or reference
-    public GameObject[] roomPrefabs; // Array of room prefabs to instantiate
+    public List<GameObject> possibleLayouts;
+    public GameObject currentLayout;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -40,7 +38,7 @@ public class S_LevelGenerator : MonoBehaviour
             GenerateLevel();
         }
 
-        roomPrefabs = Resources.LoadAll<GameObject>("ReadyRooms"); // Load all room prefabs from the specified folder
+
 
     }
 
@@ -56,16 +54,13 @@ public class S_LevelGenerator : MonoBehaviour
 
     void GenerateLevel()
     {
-        // Implement level generation logic here
-        levelMatrix = new GameObject[matrixSizeX][]; // Initialize the level matrix
-        levelMatrixNames = new string[matrixSizeX][]; // Initialize the level matrix names
-
-        for (int x = 0; x < matrixSizeX; x++)
+        foreach (Transform child in transform)
         {
-            levelMatrix[x] = new GameObject[matrixSizeY];
-            levelMatrixNames[x] = new string[matrixSizeY];
+            GameObject.Destroy(child.gameObject);
         }
 
+        currentLayout = GameObject.Instantiate(possibleLayouts[Random.Range(0, possibleLayouts.Count)]);
+        currentLayout.transform.parent = this.transform;
 
 
     }
